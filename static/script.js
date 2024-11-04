@@ -121,17 +121,20 @@ function generateConcept() {
 }
 
 function showLightbox(imageUrl, prompt) {
-    const aspectRatio = document.getElementById('aspectRatio').value;
     const lightbox = document.createElement('div');
     lightbox.className = 'lightbox';
     lightbox.innerHTML = `
         <div class="lightbox-content">
             <span class="close" onclick="closeLightbox()">&times;</span>
-            <img src="${imageUrl}" alt="Generated Architectural Concept" class="aspect-${aspectRatio}">
-            <p><strong>Prompt:</strong> ${prompt}</p>
+            <div class="lightbox-image-container">
+                <img src="${imageUrl}" alt="Generated Architectural Concept">
+            </div>
+            <p>${prompt}</p>
         </div>
     `;
     document.body.appendChild(lightbox);
+    
+    // Add click event listener to close on overlay click
     lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox) {
             closeLightbox();
@@ -187,24 +190,7 @@ function isInFavorites(rendering) {
 
 function openModal(index) {
     const rendering = renderings[index];
-    const modal = document.createElement('div');
-    modal.className = 'modal';
-    modal.innerHTML = `
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <img src="${rendering.imageUrl}" alt="Architectural Concept">
-            <p><strong>Prompt:</strong> ${rendering.prompt}</p>
-            <div class="modal-actions">
-                <button class="btn btn-primary save-btn" onclick="saveToFavorites(${index})">Save to Favorites</button>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(modal);
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
+    showLightbox(rendering.imageUrl, rendering.prompt);
 }
 
 function closeModal() {
@@ -304,21 +290,7 @@ function loadFavorites() {
 function openFavoriteModal(index) {
     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     const favorite = favorites[index];
-    const modal = document.createElement('div');
-    modal.className = 'modal';
-    modal.innerHTML = `
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <img src="${favorite.imageUrl}" alt="Architectural Concept">
-            <p><strong>Prompt:</strong> ${favorite.prompt}</p>
-        </div>
-    `;
-    document.body.appendChild(modal);
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
+    showLightbox(favorite.imageUrl, favorite.prompt);
 }
 
 function deleteFavorite(index) {

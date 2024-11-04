@@ -1,6 +1,6 @@
 :root {
-  --primary-color: #0A84FF;
-  --primary-hover: #007AFF;
+  --primary-color: #1D1D1F;
+  --primary-hover: #2D2D2F;
   --bg-color: #F5F5F7;
   --card-bg: #FFFFFF;
   --text-color: #1D1D1F;
@@ -74,7 +74,7 @@ body {
 
 .side-nav .generate-nav-btn {
   margin: 16px 24px;
-  background: var(--primary-color);
+  background: #1D1D1F;
   color: white;
   padding: 12px;
   border-radius: var(--radius-sm);
@@ -82,7 +82,7 @@ body {
 }
 
 .side-nav .generate-nav-btn:hover {
-  background: var(--primary-hover);
+  background: #2D2D2F;
 }
 
 /* Adjust main content */
@@ -386,31 +386,50 @@ input[type="text"]::placeholder {
   50% { opacity: 1; }
 }
 
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
 .lightbox-content {
   background: var(--card-bg);
-  padding: 24px;
+  padding: 32px;
   border-radius: var(--radius-md);
-  text-align: left;
-  max-width: 90%;
-  max-height: 90vh;
-  width: auto;
+  width: 90%;
+  max-width: 1000px;
   position: relative;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  overflow: auto;
+  box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
+}
+
+.lightbox-image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .lightbox-content img {
-  max-width: 90%;
-  max-height: 80vh;
+  max-width: 100%;
+  max-height: 70vh;
   object-fit: contain;
   border-radius: var(--radius-sm);
 }
 
 .lightbox-content p {
-  margin: 0;
+  margin: 16px 0 0 0;
+  padding: 16px;
+  border-top: 1px solid var(--border-color);
   color: var(--text-secondary);
   font-size: 14px;
   line-height: 1.5;
@@ -498,4 +517,14 @@ input[type="text"]::placeholder {
 
 .page-header .generate-btn i {
   font-size: 12px;
+}
+
+/* Add new container for image */
+.lightbox-image-container {
+  width: 100%;
+  overflow: auto;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
