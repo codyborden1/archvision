@@ -1,0 +1,156 @@
+<div id="generation-form" class="page split-screen">
+    <div class="left-panel">
+        <div class="page-header">
+            <h1>Generate Architectural Concept</h1>
+        </div>
+        <form id="imageForm" class="form-column">
+            <div class="form-section">
+                <h3>Building Type</h3>
+                <div class="select-wrapper">
+                    <select id="buildingType">
+                        <option value="">Choose a building type</option>
+                        <option value="Civic">Civic</option>
+                        <option value="Residential">Residential</option>
+                        <option value="Commercial">Commercial</option>
+                        <option value="Industrial">Industrial</option>
+                        <option value="Public Space">Public Space</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>View Type</h3>
+                <select id="viewType">
+                    <option value="">Select View Type</option>
+                    <option value="Interior">Interior</option>
+                    <option value="Exterior">Exterior</option>
+                </select>
+            </div>
+
+            <div class="form-section">
+                <h3>Architectural Style</h3>
+                <select id="architecturalStyle">
+                    <option value="">Select Architectural Style</option>
+                    <option value="Modernism">Modernism</option>
+                    <option value="Postmodernism">Postmodernism</option>
+                    <option value="Brutalism">Brutalism</option>
+                    <option value="Gothic">Gothic</option>
+                    <option value="Renaissance">Renaissance</option>
+                    <option value="Baroque">Baroque</option>
+                    <option value="Neoclassical">Neoclassical</option>
+                    <option value="Art Deco">Art Deco</option>
+                    <option value="Bauhaus">Bauhaus</option>
+                    <option value="Deconstructivism">Deconstructivism</option>
+                    <option value="High-tech">High-tech</option>
+                    <option value="Organic Architecture">Organic Architecture</option>
+                </select>
+            </div>
+
+            <div class="form-section">
+                <h3>Building Component</h3>
+                <select id="buildingComponent">
+                    <option value="">Select Building Component</option>
+                    <option value="Facade">Facade</option>
+                    <option value="Curtain Wall">Curtain Wall</option>
+                    <option value="Cladding">Cladding</option>
+                    <option value="Fenestration">Fenestration</option>
+                    <option value="Roof">Roof</option>
+                    <option value="Windows">Windows</option>
+                    <option value="Columns">Columns</option>
+                    <option value="Walls">Walls</option>
+                </select>
+            </div>
+
+            <div class="form-section">
+                <h3>Design Principle</h3>
+                <select id="designPrinciple">
+                    <option value="">Select Design Principle</option>
+                    <option value="Proportion">Proportion</option>
+                    <option value="Symmetry">Symmetry</option>
+                    <option value="Hierarchy">Hierarchy</option>
+                    <option value="Rhythm">Rhythm</option>
+                    <option value="Balance">Balance</option>
+                    <option value="Contrast">Contrast</option>
+                    <option value="Unity">Unity</option>
+                    <option value="Scale">Scale</option>
+                </select>
+            </div>
+
+            <div class="form-section">
+                <h3>Material</h3>
+                <select id="materialType">
+                    <option value="">Select Material</option>
+                    <option value="Concrete">Concrete</option>
+                    <option value="Steel">Steel</option>
+                    <option value="Glass">Glass</option>
+                    <option value="Wood">Wood</option>
+                    <option value="Stone">Stone</option>
+                    <option value="Brick">Brick</option>
+                </select>
+            </div>
+
+            <div class="form-section">
+                <h3>Structural System</h3>
+                <select id="structuralSystem">
+                    <option value="">Select Structural System</option>
+                    <option value="Post-and-lintel">Post-and-lintel</option>
+                    <option value="Truss">Truss</option>
+                    <option value="Arch">Arch</option>
+                    <option value="Vault">Vault</option>
+                    <option value="Dome">Dome</option>
+                    <option value="Cantilever">Cantilever</option>
+                </select>
+            </div>
+
+            <div class="form-section">
+                <h3>Sustainability Option</h3>
+                <select id="sustainabilityOption">
+                    <option value="">Select Sustainability Option</option>
+                    <option value="Passive Solar Design">Passive Solar Design</option>
+                    <option value="Green Roof">Green Roof</option>
+                    <option value="Solar Panels">Solar Panels</option>
+                    <option value="Natural Ventilation">Natural Ventilation</option>
+                    <option value="Rainwater Harvesting">Rainwater Harvesting</option>
+                </select>
+            </div>
+
+            <div class="form-section">
+                <h3>Custom Keyword</h3>
+                <input type="text" id="customKeyword" placeholder="Enter custom keyword (optional)">
+            </div>
+
+            <div class="form-section">
+                <h3>Aspect Ratio</h3>
+                <select id="aspectRatio" name="aspectRatio">
+                    <option value="ASPECT_1_1">Square (1:1)</option>
+                    <option value="ASPECT_16_9">Landscape (16:9)</option>
+                    <option value="ASPECT_9_16">Portrait (9:16)</option>
+                    <option value="ASPECT_10_16">Tall Portrait (10:16)</option>
+                </select>
+            </div>
+
+            <div class="form-section">
+                <h3>Rendering Style</h3>
+                <select id="renderingStyle">
+                    <option value="">Select Rendering Style</option>
+                    <option value="Photorealistic">Photorealistic</option>
+                    <option value="Blueprint">Blueprint</option>
+                    <option value="Watercolor">Watercolor</option>
+                    <option value="Sketch">Sketch</option>
+                    <option value="3D Model">3D Model</option>
+                    <option value="Isometric">Isometric</option>
+                    <option value="Axonometric">Axonometric</option>
+                    <option value="Section">Section</option>
+                    <option value="Elevation">Elevation</option>
+                    <option value="Conceptual">Conceptual</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="right-panel">
+        <h2>Final Prompt</h2>
+        <textarea id="finalPrompt" rows="10" readonly></textarea>
+        <button type="submit" class="generate-btn" onclick="generateConcept()">Generate Concept</button>
+        <div id="result"></div>
+    </div>
+</div>

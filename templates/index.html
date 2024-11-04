@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArchVision: AI-Powered Architectural Concept Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav class="side-nav">
+        <ul>
+            <li><a href="#dashboard" class="nav-link" data-page="dashboard"><i class="fas fa-home"></i>Dashboard</a></li>
+            <li><a href="#my-renderings" class="nav-link" data-page="my-renderings"><i class="fas fa-images"></i>My Renderings</a></li>
+            <li><a href="#favorites" class="nav-link" data-page="favorites"><i class="fas fa-star"></i>Favorites</a></li>
+            <li><a href="#generation-form" class="nav-link" data-page="generation-form"><i class="fas fa-plus"></i>Generate</a></li>
+        </ul>
+    </nav>
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="logo">
+                <!-- ArchVision Logo -->
+            </div>
+        </div>
+        <div id="page-content"></div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
