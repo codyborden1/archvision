@@ -1,5 +1,7 @@
 const pageContent = document.getElementById('page-content');
 let renderings = [];
+let selectMode = false;
+let selectedItems = new Set();
 
 function loadPage(pageId) {
     fetch(`/${pageId}`)
@@ -167,16 +169,28 @@ function updateRenderingsGrid() {
         renderings.forEach((rendering, index) => {
             const renderingItem = document.createElement('div');
             renderingItem.className = 'rendering-item';
+            renderingItem.dataset.id = index;
             const isFavorited = isInFavorites(rendering);
+
+            // If in select mode, make the entire item clickable
+            if (selectMode) {
+                renderingItem.classList.add('selectable');
+                renderingItem.onclick = (e) => toggleItemSelection(e, renderingItem);
+            }
+
             renderingItem.innerHTML = `
-                <img src="${rendering.imageUrl}" alt="Architectural Concept" onclick="openModal(${index})">
+                <img src="${rendering.imageUrl}" alt="Architectural Concept" ${!selectMode ? `onclick="openModal(${index})"` : ''}>
                 <p>${rendering.prompt}</p>
-                <div class="rendering-actions">
-                    <button class="save-btn ${isFavorited ? 'favorited' : ''}" onclick="toggleFavorite(${index})">
-                        <i class="fa-star ${isFavorited ? 'fas' : 'far'}"></i>
-                    </button>
-                    <button class="delete-btn" onclick="deleteRendering(${index})"><i class="fas fa-trash"></i></button>
-                </div>
+                ${!selectMode ? `
+                    <div class="rendering-actions">
+                        <button class="save-btn ${isFavorited ? 'favorited' : ''}" onclick="toggleFavorite(${index})">
+                            <i class="fa-star ${isFavorited ? 'fas' : 'far'}"></i>
+                        </button>
+                        <button class="delete-btn" onclick="deleteRendering(${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                ` : ''}
             `;
             renderingsGrid.appendChild(renderingItem);
         });
@@ -277,10 +291,18 @@ function loadFavorites() {
         favorites.forEach((favorite, index) => {
             const favoriteItem = document.createElement('div');
             favoriteItem.className = 'rendering-item';
+            favoriteItem.dataset.id = index;
+            
+            // If in select mode, make the entire item clickable
+            if (selectMode) {
+                favoriteItem.classList.add('selectable');
+                favoriteItem.onclick = (e) => toggleItemSelection(e, favoriteItem);
+            }
+            
             favoriteItem.innerHTML = `
-                <img src="${favorite.imageUrl}" alt="Architectural Concept" onclick="openFavoriteModal(${index})">
+                <img src="${favorite.imageUrl}" alt="Architectural Concept" ${!selectMode ? `onclick="openFavoriteModal(${index})"` : ''}>
                 <p>${favorite.prompt}</p>
-                <button class="delete-btn" onclick="deleteFavorite(${index})">Remove</button>
+                ${!selectMode ? `<button class="delete-btn" onclick="deleteFavorite(${index})">Remove</button>` : ''}
             `;
             favoritesGrid.appendChild(favoriteItem);
         });
@@ -310,4 +332,89 @@ function updateActiveNavLink(pageId) {
             link.classList.remove('active');
         }
     });
+}
+
+function toggleSelectMode(page) {
+    selectMode = !selectMode;
+    selectedItems.clear();
+    const grid = page === 'favorites' ? document.getElementById('favoritesGrid') : document.getElementById('renderingsGrid');
+    const bulkActions = document.getElementById('bulkActions');
+    const selectBtn = document.getElementById('selectModeBtn');
+
+    if (selectMode) {
+        selectBtn.textContent = 'Cancel Selection';
+        bulkActions.classList.remove('hidden');
+        // Reload the grid in select mode
+        if (page === 'favorites') {
+            loadFavorites();
+        } else if (page === 'renderings') {
+            updateRenderingsGrid();
+        }
+    } else {
+        selectBtn.textContent = 'Select Multiple';
+        bulkActions.classList.add('hidden');
+        // Reload the grid in normal mode
+        if (page === 'favorites') {
+            loadFavorites();
+        } else if (page === 'renderings') {
+            updateRenderingsGrid();
+        }
+    }
+}
+
+function toggleItemSelection(e, item) {
+    e.preventDefault(); // Prevent any default click behavior
+    const itemId = item.dataset.id;
+    
+    if (selectedItems.has(itemId)) {
+        selectedItems.delete(itemId);
+        item.classList.remove('selected');
+    } else {
+        selectedItems.add(itemId);
+        item.classList.add('selected');
+    }
+}
+
+function deleteBulkFavorites() {
+    if (selectedItems.size === 0) return;
+    
+    if (confirm(`Are you sure you want to remove ${selectedItems.size} items from favorites?`)) {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        const selectedIndexes = Array.from(selectedItems).map(id => parseInt(id));
+        
+        // Remove selected items from favorites
+        favorites = favorites.filter((_, index) => !selectedIndexes.includes(index));
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        
+        // Reset selection mode and reload favorites
+        toggleSelectMode('favorites');
+        loadFavorites();
+    }
+}
+
+function deleteBulkRenderings() {
+    if (selectedItems.size === 0) return;
+    
+    if (confirm(`Are you sure you want to delete ${selectedItems.size} renderings?`)) {
+        renderings = renderings.filter((_, index) => !selectedItems.has(index.toString()));
+        saveRenderingsToLocalStorage();
+        toggleSelectMode('renderings');
+        updateRenderingsGrid();
+    }
+}
+
+function bulkToggleFavorite() {
+    if (selectedItems.size === 0) return;
+    
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    selectedItems.forEach(id => {
+        const rendering = renderings[parseInt(id)];
+        if (!favorites.some(fav => fav.imageUrl === rendering.imageUrl)) {
+            favorites.push(rendering);
+        }
+    });
+    
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    alert(`${selectedItems.size} items added to favorites!`);
+    toggleSelectMode('renderings');
 }

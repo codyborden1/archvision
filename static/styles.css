@@ -528,3 +528,53 @@ input[type="text"]::placeholder {
   justify-content: center;
   align-items: center;
 }
+
+.header-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.bulk-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.bulk-actions.hidden {
+    display: none;
+}
+
+.rendering-item.selectable {
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.2s ease;
+}
+
+.rendering-item.selectable::before {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-color);
+    z-index: 1;
+}
+
+.rendering-item.selected {
+    background: var(--bg-hover);
+}
+
+.rendering-item.selected::before {
+    background: var(--primary-color);
+    content: '✓';
+    color: white;
+    text-align: center;
+    line-height: 1.5rem;
+}
+
+.rendering-item.selectable:hover {
+    background: var(--bg-hover);
+}

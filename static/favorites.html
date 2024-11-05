@@ -1,6 +1,12 @@
 <div id="favorites" class="page">
     <div class="page-header">
         <h1>Favorites</h1>
+        <div class="header-actions">
+            <button class="bulk-action-btn" onclick="toggleSelectMode('favorites')" id="selectModeBtn">Select Multiple</button>
+            <div class="bulk-actions hidden" id="bulkActions">
+                <button class="delete-btn" onclick="deleteBulkFavorites()">Remove from Favorites</button>
+            </div>
+        </div>
         <button class="generate-btn" onclick="scrollToForm()">Generate</button>
     </div>
     <div class="renderings-grid" id="favoritesGrid">

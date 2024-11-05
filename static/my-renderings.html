@@ -1,6 +1,13 @@
 <div id="my-renderings" class="page">
     <div class="page-header">
         <h1>My Renderings</h1>
+        <div class="header-actions">
+            <button class="bulk-action-btn" onclick="toggleSelectMode('renderings')" id="selectModeBtn">Select Multiple</button>
+            <div class="bulk-actions hidden" id="bulkActions">
+                <button class="favorite-btn" onclick="bulkToggleFavorite()">Add to Favorites</button>
+                <button class="delete-btn" onclick="deleteBulkRenderings()">Delete Selected</button>
+            </div>
+        </div>
         <button class="generate-btn" onclick="scrollToForm()">Generate</button>
     </div>
     <div class="renderings-grid" id="renderingsGrid">
